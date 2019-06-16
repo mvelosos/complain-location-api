@@ -4,11 +4,9 @@ class Api::V1::ComplainsController < ApplicationController
   end
 
   def show
-
   end
 
   def create
   end
-  
 
 end
