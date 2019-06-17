@@ -2,7 +2,6 @@ class Complain
   include Mongoid::Document
   include Mongoid::Timestamps
   include Geocoder::Model::Mongoid
-  # include Geocoder::Model::MongoMapper
 
   field :name, type: String
   field :title, type: String
