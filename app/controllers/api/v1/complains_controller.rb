@@ -2,20 +2,19 @@ class Api::V1::ComplainsController < ApplicationController
 
   # GET /complains
   def index
-    @complains = Complain.all.order(created_at: :desc)
+    @complains = Api::V1::ComplainsService.new.list
     render json: @complains, status: :ok
   end
 
    # GET /complains/:id
   def show
-    p params
-    @complain = Complain.find(params[:id])
+    @complain = Api::V1::ComplainsService.new.find(params[:id])
     render json: @complain, status: :ok
   end
 
    # POST /complains
   def create
-    @complain = Complain.new(create_params)
+    @complain = Api::V1::ComplainsService.new.create(create_params)
     if @complain.save
       render json: @complain, status: :created
     else
@@ -25,32 +24,27 @@ class Api::V1::ComplainsController < ApplicationController
 
   # GET /complains/search
   def search
-    if params[:company] && params[:locale]
-      @complains = Complain.where(company: /.*#{params[:company]}.*/)
-                           .where(locale: /.*#{params[:locale]}.*/)
-      response = get_response(@complains)
-      render json: response, status: :ok
-    elsif params[:company]
-      @complains = Complain.any_of(company: /.*#{params[:company]}.*/)
-      response = get_response(@complains)
-      render json: response, status: :ok
-    elsif params[:locale]
-      @complains = Complain.any_of(locale: /.*#{params[:locale]}.*/)
-      response = get_response(@complains)
+    response = Api::V1::ComplainsService.new.search(params)
+    if response
       render json: response, status: :ok
     end
+  end
+
+  # GET /complains/coodinates
+  def coordinates
+    result = Api::V1::ComplainsService.new.coordinates(params)
+    render json: result, status: :ok
+  end
+
+  # GET /complains/:id/localization
+  def localization
+    result = Api::V1::ComplainsService.new.localization(params)
+    render json: result, status: :ok
   end
 
   private
     def create_params
       params.require(:complain).permit(:name, :title, :description, :locale, :company)
-    end
-
-    def get_response(complains)
-      {
-        quantity: complains.count,
-        complains: complains
-      }
     end
 
 end
