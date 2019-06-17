@@ -18,6 +18,7 @@ gem 'puma', '~> 3.11'
 gem 'mongoid'
 gem 'rack-cors'
 gem 'rack-attack'
+gem 'geocoder'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
