@@ -168,6 +168,7 @@ test:
 production:
   clients:
     default:
+      database: heroku_xfcf127g
       uri: <%= ENV['MONGOLAB_URI'] %>
       options:
         skip_version_check: true
