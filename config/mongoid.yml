@@ -168,7 +168,7 @@ test:
 production:
   clients:
     default:
-      uri: ENV['MONGODB_URI']
+      uri: <%= ENV['MONGOLAB_URI'] %>
     options:
       skip_version_check: true
     safe: true
