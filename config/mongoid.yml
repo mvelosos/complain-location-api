@@ -166,9 +166,13 @@ test:
     raise_not_found_error: false
 
 production:
-  sessions:
+  clients:
     default:
-      uri: <%= ENV['MONGOLAB_URI'] %>
+      database: heroku_xfcf127g
+      hosts:
+        - <%= ENV['MONGOLAB_URI'] %>
       options:
         skip_version_check: true
         safe: true
+  options:
+    raise_not_found_error: false
