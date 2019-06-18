@@ -9,7 +9,11 @@ class Api::V1::ComplainsController < ApplicationController
    # GET /complains/:id
   def show
     @complain = Api::V1::ComplainsService.new.find(params[:id])
-    render json: @complain, status: :ok
+    if @complain
+      render json: @complain, status: :ok
+    else
+      render json: { error: 'not found'}, status: :not_found
+    end
   end
 
    # POST /complains
