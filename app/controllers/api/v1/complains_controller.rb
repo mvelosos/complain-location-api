@@ -3,13 +3,17 @@ class Api::V1::ComplainsController < ApplicationController
   # GET /complains
   def index
     @complains = Api::V1::ComplainsService.new.list
-    render json: @complains, status: :ok
+    render json: {total: @complains.count, complains: @complains}, status: :ok
   end
 
    # GET /complains/:id
   def show
     @complain = Api::V1::ComplainsService.new.find(params[:id])
-    render json: @complain, status: :ok
+    if @complain
+      render json: @complain, status: :ok
+    else
+      render json: { error: 'not found'}, status: :not_found
+    end
   end
 
    # POST /complains
@@ -39,7 +43,11 @@ class Api::V1::ComplainsController < ApplicationController
   # GET /complains/:id/localization
   def localization
     result = Api::V1::ComplainsService.new.localization(params)
-    render json: result, status: :ok
+    if result
+      render json: result, status: :ok
+    else
+      render json: {error: 'not found'}, status: :not_found
+    end
   end
 
   private

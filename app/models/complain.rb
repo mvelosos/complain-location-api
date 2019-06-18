@@ -12,4 +12,10 @@ class Complain
 
   geocoded_by :locale
   after_validation :geocode
+
+  validates_presence_of :title
+  validates_presence_of :description
+  validates_presence_of :locale
+  validates_presence_of :company
+
 end

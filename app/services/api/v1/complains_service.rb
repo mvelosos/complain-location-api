@@ -32,7 +32,7 @@ class Api::V1::ComplainsService
 
   def localization(params)
     @complain = Complain.find(params[:id])
-    result = Geolocalization.localization([@complain.coordinates[1], @complain.coordinates[0]])
+    result = Geolocalization.localization([@complain.coordinates[1], @complain.coordinates[0]]) if @complain
   end
 
   private
