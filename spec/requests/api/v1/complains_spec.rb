@@ -181,7 +181,46 @@ RSpec.describe "Complains", type: :request do
         expect(response).to have_http_status(200)
       end
     end
+  end
 
+  describe 'GET /complains/coodinates' do
+
+    context 'when params is valid' do
+      it 'with real coordinates' do
+        get "#{DEFAULT_PATH}/complains/coordinates?lat=-7.1215981&lon=-34.882028"
+        expect(response).to have_http_status(200)
+      end
+
+      it 'with unreal coordinates' do
+        get "#{DEFAULT_PATH}/complains/coordinates?lat=9999&lon=9999"
+        expect(response).to have_http_status(200)
+      end
+    end
+
+  end
+
+  describe 'GET /complains/:id/localization' do
+    
+    context 'when id is valid' do
+      it 'returns data' do
+        complain = Complain.create(
+                                  name: FFaker::Name,
+                                  title: FFaker::Name.first_name,
+                                  description: FFaker::Name,
+                                  locale: 'São Paulo, SP',
+                                  company: FFaker::Company.name
+                                  )
+        get "#{DEFAULT_PATH}/complains/#{complain.id}/localization"
+        expect(response).to have_http_status(200)
+      end
+    end
+
+    context 'when id is not valid' do
+      it 'returns not found' do
+        get "#{DEFAULT_PATH}/complains/#{FFaker::IdentificationBR.rg}/localization"
+        expect(response).to have_http_status(404)
+      end
+    end
   end
 
 end
