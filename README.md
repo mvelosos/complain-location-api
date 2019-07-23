@@ -1,6 +1,4 @@
-# RA Challenge
-
-## This project is a resolution for RA Challenge
+# Complain Geolocation API
 
 ### Project Dependencies:
 
