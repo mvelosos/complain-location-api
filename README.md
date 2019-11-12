@@ -326,6 +326,7 @@ Response:
   }
 ]
 ```
+
 * Returns 200 when successful.
 * Returns 404 not found a complain with given id.
 
